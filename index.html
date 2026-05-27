@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="명사와 위인들의 주옥같은 명언들을 매일 새롭게 감상하고 마음에 새겨보세요. 무작위 명언 보기, 음성 낭독(TTS), 즐겨찾기 보관 기능을 지원하는 프리미엄 명언수첩 웹앱입니다.">
+  <meta name="keywords" content="명언, 명언수첩, 자기계발, 동기부여, 무작위명언, 스티브잡스, 인생명언, 위인명언">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://quote-notebook.example.com/">
+  <meta property="og:title" content="💡 생각의 기록 - 하루 한 줄 명언수첩">
+  <meta property="og:description" content="인생을 바꾸는 명사들의 조언을 무작위로 감상하고, 소리로 듣고, 내 마음에 저장하세요.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=1200&auto=format&fit=crop">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="💡 생각의 기록 - 하루 한 줄 명언수첩">
+  <meta property="twitter:description" content="인생을 바꾸는 명사들의 조언을 무작위로 감상하고, 소리로 듣고, 내 마음에 저장하세요.">
+
+  <title>생각의 기록 — 명언수첩 (Quote Notebook)</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Background Ambient Glows -->
+  <div class="ambient-glow glow-1" aria-hidden="true"></div>
+  <div class="ambient-glow glow-2" aria-hidden="true"></div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo">
+        <i data-lucide="book-open" class="logo-icon"></i>
+        <h1>명언수첩 <span>Notebook</span></h1>
+      </div>
+      <div class="header-actions">
+        <button id="btn-theme-toggle" class="icon-btn" aria-label="테마 전환" title="다크/라이트 모드">
+          <i data-lucide="moon" class="theme-icon-dark"></i>
+          <i data-lucide="sun" class="theme-icon-light"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="app-main">
+    <div class="main-container">
+      
+      <!-- Quote Card Section -->
+      <section class="quote-section">
+        <article class="quote-card" id="quote-card-container">
+          <div class="card-glow" aria-hidden="true"></div>
+          
+          <div class="card-header">
+            <span class="category-badge">
+              <i data-lucide="sparkles" class="badge-icon"></i>
+              <span>자기계발 및 성장</span>
+            </span>
+            <div class="card-actions">
+              <button id="btn-favorite" class="card-action-btn" aria-label="즐겨찾기 추가" title="즐겨찾기">
+                <i data-lucide="heart" class="heart-icon"></i>
+              </button>
+            </div>
+          </div>
+          
+          <div class="card-body">
+            <i data-lucide="quote" class="quote-mark-icon" aria-hidden="true"></i>
+            <p id="quote-text" class="quote-text">로딩 중...</p>
+            <div class="quote-divider"></div>
+            <div class="quote-author-info">
+              <cite id="quote-author" class="quote-author">작가 이름</cite>
+              <span id="quote-lifespan" class="quote-lifespan">생몰연도</span>
+            </div>
+          </div>
+          
+          <div class="card-footer">
+            <button id="btn-speak" class="action-btn secondary" aria-label="명언 읽기" title="음성으로 듣기">
+              <i data-lucide="volume-2"></i>
+              <span>듣기</span>
+            </button>
+            <button id="btn-copy" class="action-btn secondary" aria-label="명언 복사" title="클립보드 복사">
+              <i data-lucide="copy"></i>
+              <span>복사</span>
+            </button>
+          </div>
+        </article>
+      </section>
+
+      <!-- Navigation & Controls -->
+      <nav class="nav-controls">
+        <button id="btn-list-toggle" class="nav-btn" aria-label="전체 명언 목록 보기">
+          <i data-lucide="list"></i>
+          <span>전체 목록</span>
+        </button>
+        
+        <button id="btn-next" class="nav-btn primary" aria-label="다음 명언 보기">
+          <span>새로운 명언</span>
+          <i data-lucide="arrow-right"></i>
+        </button>
+
+        <button id="btn-fav-toggle" class="nav-btn" aria-label="즐겨찾기 보관함 보기">
+          <i data-lucide="folder-heart"></i>
+          <span>즐겨찾기</span>
+          <span id="fav-count-badge" class="badge-count">0</span>
+        </button>
+      </nav>
+
+    </div>
+  </main>
+
+  <!-- Modal: Entire Quote List -->
+  <dialog id="modal-list" class="app-modal">
+    <div class="modal-content">
+      <header class="modal-header">
+        <h2><i data-lucide="list-collapse"></i> 전체 명언 목록</h2>
+        <button id="btn-close-list" class="close-btn" aria-label="닫기">
+          <i data-lucide="x"></i>
+        </button>
+      </header>
+      <div class="modal-body">
+        <div class="search-bar-container">
+          <i data-lucide="search" class="search-icon"></i>
+          <input type="text" id="search-input" placeholder="인물 이름 또는 명언 검색..." aria-label="명언 검색">
+        </div>
+        <ul id="entire-quote-list" class="quote-list-view">
+          <!-- JS로 채워짐 -->
+        </ul>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Modal: Favorites Storage -->
+  <dialog id="modal-favorites" class="app-modal">
+    <div class="modal-content">
+      <header class="modal-header">
+        <h2><i data-lucide="folder-heart"></i> 내 즐겨찾기 보관함</h2>
+        <button id="btn-close-fav" class="close-btn" aria-label="닫기">
+          <i data-lucide="x"></i>
+        </button>
+      </header>
+      <div class="modal-body">
+        <ul id="favorites-quote-list" class="quote-list-view">
+          <!-- JS로 채워짐 -->
+        </ul>
+        <div id="fav-empty-state" class="empty-state">
+          <i data-lucide="heart-off" class="empty-icon"></i>
+          <p>보관함이 비어 있습니다.<br>마음에 드는 명언에 하트를 눌러보세요!</p>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Toast Notifications Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <p>&copy; 2026 명언수첩. 바이브 코딩 입문자를 위한 MVP 프로젝트.</p>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    // Initialize Lucide Icons for HTML elements
+    lucide.createIcons();
+  </script>
+</body>
+</html>

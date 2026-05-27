@@ -1,0 +1,877 @@
+/* ==========================================================================
+   1. Design System & CSS Variables
+   ========================================================================== */
+:root {
+  /* Light Theme Colors (Default) */
+  --bg-primary: hsl(220, 30%, 96%);
+  --bg-secondary: hsla(220, 30%, 100%, 0.65);
+  --border-color: hsla(220, 20%, 85%, 0.4);
+  --border-focus: hsl(250, 80%, 65%);
+  
+  --text-primary: hsl(220, 40%, 15%);
+  --text-secondary: hsl(220, 20%, 45%);
+  --text-muted: hsl(220, 15%, 60%);
+  
+  --primary: hsl(250, 75%, 62%);
+  --primary-hover: hsl(250, 85%, 58%);
+  --primary-glow: hsla(250, 75%, 62%, 0.25);
+  
+  --accent: hsl(350, 85%, 62%);
+  --accent-hover: hsl(350, 95%, 58%);
+  --accent-glow: hsla(350, 85%, 62%, 0.2);
+  
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 30px 2px hsla(250, 75%, 62%, 0.15);
+  
+  --glow-1-color: hsla(270, 90%, 80%, 0.4);
+  --glow-2-color: hsla(190, 90%, 80%, 0.4);
+  
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  
+  --glass-blur: 16px;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+}
+
+[data-theme="dark"] {
+  /* Dark Theme Colors */
+  --bg-primary: hsl(220, 40%, 6%);
+  --bg-secondary: hsla(220, 35%, 12%, 0.6);
+  --border-color: hsla(220, 20%, 25%, 0.35);
+  --border-focus: hsl(250, 75%, 65%);
+  
+  --text-primary: hsl(220, 30%, 94%);
+  --text-secondary: hsl(220, 15%, 70%);
+  --text-muted: hsl(220, 10%, 50%);
+  
+  --primary: hsl(250, 80%, 66%);
+  --primary-hover: hsl(250, 90%, 72%);
+  --primary-glow: hsla(250, 80%, 66%, 0.3);
+  
+  --accent: hsl(352, 90%, 65%);
+  --accent-hover: hsl(352, 100%, 70%);
+  --accent-glow: hsla(352, 90%, 65%, 0.25);
+  
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 35px 2px hsla(250, 80%, 66%, 0.12);
+  
+  --glow-1-color: hsla(270, 70%, 20%, 0.35);
+  --glow-2-color: hsla(190, 70%, 20%, 0.3);
+}
+
+/* ==========================================================================
+   2. Reset & Typography Setup
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Outfit', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  position: relative;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+  line-height: 1.6;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+/* ==========================================================================
+   3. Ambient Decorative Glows
+   ========================================================================== */
+.ambient-glow {
+  position: fixed;
+  width: 40vw;
+  height: 40vw;
+  min-width: 300px;
+  min-height: 300px;
+  border-radius: 50%;
+  filter: blur(100px);
+  z-index: -1;
+  pointer-events: none;
+  transition: background-color var(--transition-normal);
+}
+
+.glow-1 {
+  top: -10%;
+  left: -5%;
+  background-color: var(--glow-1-color);
+  animation: float-glow-1 25s ease-in-out infinite alternate;
+}
+
+.glow-2 {
+  bottom: 5%;
+  right: -5%;
+  background-color: var(--glow-2-color);
+  animation: float-glow-2 30s ease-in-out infinite alternate;
+}
+
+@keyframes float-glow-1 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(8%, 10%) scale(1.15); }
+}
+
+@keyframes float-glow-2 {
+  0% { transform: translate(0, 0) scale(1.1); }
+  100% { transform: translate(-10%, -8%) scale(0.9); }
+}
+
+/* ==========================================================================
+   4. Header & Footer Styling
+   ========================================================================== */
+.app-header {
+  border-bottom: 1px solid var(--border-color);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  background-color: var(--bg-secondary);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: border-color var(--transition-normal), background-color var(--transition-normal);
+}
+
+.header-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo-icon {
+  color: var(--primary);
+  width: 1.75rem;
+  height: 1.75rem;
+  stroke-width: 2.2;
+}
+
+.logo h1 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.logo h1 span {
+  font-size: 0.9rem;
+  font-weight: 400;
+  opacity: 0.6;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-left: 0.25rem;
+}
+
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  background-color: transparent;
+  transition: transform var(--transition-bounce), border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.icon-btn:hover {
+  transform: scale(1.08);
+  border-color: var(--primary);
+  background-color: hsla(250, 75%, 62%, 0.06);
+}
+
+.icon-btn:active {
+  transform: scale(0.95);
+}
+
+/* Theme Icons Toggle Visibility */
+.theme-icon-light { display: none; }
+[data-theme="dark"] .theme-icon-dark { display: none; }
+[data-theme="dark"] .theme-icon-light { display: block; }
+
+.app-footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+}
+
+/* ==========================================================================
+   5. Main App Layout & Cards
+   ========================================================================== */
+.app-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 3rem 1.5rem 4rem;
+}
+
+.main-container {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+/* Card glassmorphism container */
+.quote-card {
+  position: relative;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 2.25rem;
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  overflow: hidden;
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal), transform var(--transition-bounce);
+}
+
+.quote-card:hover {
+  border-color: hsla(250, 75%, 62%, 0.25);
+  box-shadow: var(--shadow-lg), 0 0 40px 4px hsla(250, 75%, 62%, 0.2);
+}
+
+/* Internal Subtle Highlight Glow on Card Hover */
+.card-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 0%), hsla(250, 75%, 62%, 0.08) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.quote-card:hover .card-glow {
+  opacity: 1;
+}
+
+/* Card Header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.category-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  background: hsla(250, 75%, 62%, 0.08);
+  border: 1px solid hsla(250, 75%, 62%, 0.2);
+  border-radius: 50px;
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.badge-icon {
+  width: 0.9rem;
+  height: 0.9rem;
+  stroke-width: 2.5;
+}
+
+.card-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  color: var(--text-muted);
+  background-color: transparent;
+  transition: transform var(--transition-bounce), color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.card-action-btn:hover {
+  transform: scale(1.15);
+  color: var(--accent);
+  background-color: hsla(350, 85%, 62%, 0.08);
+}
+
+.card-action-btn:active {
+  transform: scale(0.9);
+}
+
+/* Heart Icon Bookmark Interaction */
+.heart-icon {
+  width: 1.4rem;
+  height: 1.4rem;
+  transition: fill var(--transition-bounce), stroke var(--transition-fast);
+}
+
+.card-action-btn.active {
+  color: var(--accent);
+  background-color: hsla(350, 85%, 62%, 0.08);
+}
+
+.card-action-btn.active .heart-icon {
+  fill: var(--accent);
+  stroke: var(--accent);
+  animation: heart-pop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes heart-pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+/* Card Body (Quote Text) */
+.card-body {
+  position: relative;
+  margin-bottom: 2.25rem;
+}
+
+.quote-mark-icon {
+  position: absolute;
+  top: -1rem;
+  left: -0.5rem;
+  color: var(--primary);
+  opacity: 0.08;
+  width: 4rem;
+  height: 4rem;
+  pointer-events: none;
+}
+
+.quote-text {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.65;
+  letter-spacing: -0.015em;
+  margin-bottom: 1.5rem;
+  word-break: keep-all;
+  position: relative;
+  z-index: 2;
+  transition: opacity var(--transition-normal), transform var(--transition-normal);
+}
+
+/* Card state change transition */
+.quote-card.changing .quote-text,
+.quote-card.changing .quote-author-info {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.quote-divider {
+  height: 1px;
+  background: linear-gradient(to right, var(--border-color), transparent);
+  margin-bottom: 1.25rem;
+}
+
+.quote-author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  transition: opacity var(--transition-normal), transform var(--transition-normal);
+}
+
+.quote-author {
+  font-size: 1.1rem;
+  font-style: normal;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.quote-lifespan {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Card Footer Actions */
+.card-footer {
+  display: flex;
+  gap: 0.75rem;
+  border-top: 1px dashed var(--border-color);
+  padding-top: 1.5rem;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  transition: transform var(--transition-bounce), background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.action-btn.secondary {
+  border: 1px solid var(--border-color);
+  background-color: transparent;
+  color: var(--text-secondary);
+}
+
+.action-btn.secondary:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+  color: var(--primary);
+  background-color: hsla(250, 75%, 62%, 0.05);
+}
+
+.action-btn.secondary:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.action-btn i {
+  width: 1.1rem;
+  height: 1.1rem;
+  stroke-width: 2;
+}
+
+/* Speeking Active State */
+.action-btn.speaking-active {
+  background-color: var(--primary) !important;
+  color: #fff !important;
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 12px var(--primary-glow);
+}
+
+/* ==========================================================================
+   6. Navigation Controls
+   ========================================================================== */
+.nav-controls {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr;
+  gap: 1rem;
+}
+
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  box-shadow: var(--shadow-sm);
+  color: var(--text-secondary);
+  transition: transform var(--transition-bounce), border-color var(--transition-fast), background-color var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.nav-btn:hover {
+  transform: translateY(-3px);
+  border-color: var(--primary);
+  color: var(--primary);
+  background-color: hsla(250, 75%, 62%, 0.05);
+  box-shadow: var(--shadow-md);
+}
+
+.nav-btn:active {
+  transform: translateY(-1px) scale(0.97);
+}
+
+/* New Quote Primary Button */
+.nav-btn.primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 4px 14px var(--primary-glow);
+}
+
+.nav-btn.primary:hover {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
+  color: #ffffff;
+  box-shadow: 0 6px 20px var(--primary-glow), var(--shadow-glow);
+}
+
+.nav-btn.primary i {
+  transition: transform var(--transition-bounce);
+}
+
+.nav-btn.primary:hover i {
+  transform: translateX(4px);
+}
+
+.badge-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--accent);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  min-width: 1.15rem;
+  height: 1.15rem;
+  padding: 0 4px;
+  border-radius: 10px;
+  transition: transform var(--transition-bounce);
+}
+
+.badge-count.pop {
+  animation: heart-pop 0.4s ease;
+}
+
+/* ==========================================================================
+   7. Dialog (Modals) Styles
+   ========================================================================== */
+.app-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  background-color: var(--bg-secondary);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: var(--shadow-lg);
+  max-width: 580px;
+  width: 90%;
+  max-height: 80vh;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), visibility 0.3s;
+  overflow: hidden;
+}
+
+.app-modal[open] {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.app-modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.app-modal[open]::backdrop {
+  opacity: 1;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--text-primary);
+}
+
+.modal-header h2 i {
+  color: var(--primary);
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  color: var(--text-muted);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.close-btn:hover {
+  color: var(--text-primary);
+  background-color: hsla(220, 20%, 50%, 0.1);
+}
+
+.modal-body {
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Search Bar inside Modal */
+.search-bar-container {
+  position: relative;
+  margin-bottom: 1.25rem;
+}
+
+.search-bar-container input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  font-size: 0.95rem;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  border-radius: var(--radius-sm);
+  outline: none;
+  font-family: inherit;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.search-bar-container input:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.15rem;
+  height: 1.15rem;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+/* Modal Lists View */
+.quote-list-view {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.quote-list-item {
+  position: relative;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-sm);
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.quote-list-item:hover {
+  transform: translateX(4px);
+  border-color: var(--border-focus);
+  box-shadow: var(--shadow-sm);
+}
+
+.list-item-text {
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--text-primary);
+  word-break: keep-all;
+}
+
+.list-item-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border-color);
+  padding-top: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.list-item-author {
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.list-item-lifespan {
+  color: var(--text-muted);
+}
+
+.list-item-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.list-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 50%;
+  color: var(--text-muted);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.list-action-btn:hover {
+  color: var(--primary);
+  background-color: hsla(250, 75%, 62%, 0.08);
+}
+
+.list-action-btn.delete-fav:hover {
+  color: var(--accent);
+  background-color: hsla(350, 85%, 62%, 0.08);
+}
+
+.list-action-btn i {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+/* Empty State Styling */
+.empty-state {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.empty-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  stroke-width: 1.2;
+  margin-bottom: 1rem;
+}
+
+.empty-state p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   8. Toast Notification System
+   ========================================================================== */
+.toast-container {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 100;
+  pointer-events: none;
+  width: 90%;
+  max-width: 320px;
+}
+
+.toast {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--text-primary);
+  padding: 0.8rem 1.2rem;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-lg), 0 4px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.toast-icon.success {
+  color: hsl(140, 80%, 45%);
+}
+
+.toast-icon.info {
+  color: var(--primary);
+}
+
+/* ==========================================================================
+   9. Responsiveness Settings
+   ========================================================================== */
+@media (max-width: 640px) {
+  body {
+    font-size: 15px;
+  }
+
+  .app-main {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .quote-card {
+    padding: 1.75rem 1.5rem;
+  }
+
+  .quote-text {
+    font-size: 1.25rem;
+  }
+
+  .quote-author {
+    font-size: 1rem;
+  }
+
+  .nav-controls {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .nav-btn {
+    width: 100%;
+    padding: 0.85rem;
+  }
+
+  .nav-btn.primary {
+    order: -1; /* Place 'New Quote' button always at the top in vertical layout */
+  }
+
+  .ambient-glow {
+    width: 60vw;
+    height: 60vw;
+  }
+}
