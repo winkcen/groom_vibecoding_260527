@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="나만의 드래그 앤 드롭 밈 생성기. 이미지 위에 글자를 얹고 드래그하여 실시간으로 밈을 제작해보세요. CSS Position 개념을 완벽하게 학습할 수 있는 MVP 웹앱입니다.">
+  <meta name="keywords" content="밈, 밈생성기, 드래그밈, 짤방, 짤방제조기, CSSPosition, 웹개발입문">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="⚡ 즉석 밈 생성기 — CSS Position 에디터">
+  <meta property="og:description" content="글자를 드래그하여 나만의 웃긴 밈을 만들고 즉시 다운로드해보세요!">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1531256456869-7d4f189df9d1?q=80&w=1200">
+
+  <title>즉석 밈 생성기 — CSS Position Studio</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Outfit:wght@300;400;600;800&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- html2canvas 라이브러리 (DOM을 이미지로 캡처) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Background Glows -->
+  <div class="ambient-glow glow-blue" aria-hidden="true"></div>
+  <div class="ambient-glow glow-purple" aria-hidden="true"></div>
+
+  <!-- Header -->
+  <header class="studio-header">
+    <div class="header-container">
+      <div class="logo">
+        <i data-lucide="zap" class="logo-icon"></i>
+        <h1>밈 생성기 <span>CSS Studio</span></h1>
+      </div>
+      <div class="header-links">
+        <span class="badge">CSS Position 학습 도구</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Studio Workspace -->
+  <main class="studio-main">
+    <div class="workspace-grid">
+      
+      <!-- Left Column: Meme Preview & CSS Live Debugger -->
+      <section class="preview-column">
+        
+        <!-- Live Meme Board (Container to Capture) -->
+        <div class="card preview-card">
+          <div class="card-header">
+            <span class="panel-title">
+              <i data-lucide="eye" class="panel-icon"></i> 실시간 프리뷰 (텍스트를 직접 드래그해보세요!)
+            </span>
+          </div>
+          
+          <div class="meme-canvas-wrapper">
+            <div id="meme-preview-area" class="meme-preview-area">
+              <img id="meme-image" src="" alt="Meme Template" crossorigin="anonymous">
+              
+              <!-- Absolute Position Text Layers -->
+              <div id="text-top" class="meme-text top-text" role="textbox" contenteditable="false" title="마우스 드래그로 이동 가능">
+                TOP TEXT
+              </div>
+              <div id="text-bottom" class="meme-text bottom-text" role="textbox" contenteditable="false" title="마우스 드래그로 이동 가능">
+                BOTTOM TEXT
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CSS Code Inspector (Educational Tool) -->
+        <div class="card code-card">
+          <div class="card-header">
+            <span class="panel-title">
+              <i data-lucide="code" class="panel-icon"></i> 실시간 CSS 코드 뷰어 (학습용)
+            </span>
+            <span class="code-badge">CSS Position: absolute;</span>
+          </div>
+          <div class="code-body">
+            <pre><code id="css-code-display">/* 실시간 스타일 갱신 중... */</code></pre>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Right Column: Controls Panel -->
+      <section class="controls-column">
+        <div class="card controls-card">
+          <div class="card-header">
+            <span class="panel-title">
+              <i data-lucide="sliders" class="panel-icon"></i> 에디터 컨트롤러
+            </span>
+          </div>
+          
+          <div class="card-body">
+            <!-- 1. Text Inputs -->
+            <div class="control-group">
+              <label class="control-label" for="input-top-text">상단 텍스트 (Top Text)</label>
+              <div class="input-wrapper">
+                <i data-lucide="align-center" class="input-icon"></i>
+                <input type="text" id="input-top-text" placeholder="상단 문구 입력..." value="상단에 글자를 얹고">
+              </div>
+            </div>
+
+            <div class="control-group">
+              <label class="control-label" for="input-bottom-text">하단 텍스트 (Bottom Text)</label>
+              <div class="input-wrapper">
+                <i data-lucide="align-center" class="input-icon"></i>
+                <input type="text" id="input-bottom-text" placeholder="하단 문구 입력..." value="드래그해서 위치를 맞춰봐!">
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- 2. Typography Controls (Top Text) -->
+            <div class="section-subtitle">상단 글자 스타일 (CSS absolute 제어)</div>
+            <div class="range-controls-grid">
+              <div class="control-group">
+                <div class="range-label">
+                  <span>글자 크기 (font-size)</span>
+                  <span id="val-top-size">2.0rem</span>
+                </div>
+                <input type="range" id="slider-top-size" min="1" max="4" step="0.1" value="2.0" aria-label="상단 글자 크기">
+              </div>
+              
+              <div class="control-group">
+                <div class="range-label">
+                  <span>수직 위치 (top)</span>
+                  <span id="val-top-y">8%</span>
+                </div>
+                <input type="range" id="slider-top-y" min="0" max="80" step="1" value="8" aria-label="상단 수직 위치">
+              </div>
+            </div>
+
+            <!-- 3. Typography Controls (Bottom Text) -->
+            <div class="section-subtitle">하단 글자 스타일 (CSS absolute 제어)</div>
+            <div class="range-controls-grid">
+              <div class="control-group">
+                <div class="range-label">
+                  <span>글자 크기 (font-size)</span>
+                  <span id="val-bottom-size">2.0rem</span>
+                </div>
+                <input type="range" id="slider-bottom-size" min="1" max="4" step="0.1" value="2.0" aria-label="하단 글자 크기">
+              </div>
+              
+              <div class="control-group">
+                <div class="range-label">
+                  <span>수직 위치 (bottom)</span>
+                  <span id="val-bottom-y">8%</span>
+                </div>
+                <input type="range" id="slider-bottom-y" min="0" max="80" step="1" value="8" aria-label="하단 수직 위치">
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- 4. Text Color Picker -->
+            <div class="control-group">
+              <label class="control-label" for="color-picker">글자 색상 (color)</label>
+              <div class="color-picker-container">
+                <input type="color" id="color-picker" value="#ffffff">
+                <span class="color-value-text" id="color-hex">#FFFFFF</span>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- 5. Actions: Upload / Random / Download -->
+            <div class="actions-grid">
+              <label class="btn upload-btn" for="input-file">
+                <i data-lucide="image-plus"></i>
+                <span>내 사진 올리기</span>
+                <input type="file" id="input-file" accept="image/*" style="display: none;">
+              </label>
+
+              <button id="btn-random" class="btn secondary-btn">
+                <i data-lucide="dices"></i>
+                <span>랜덤 밈 매칭</span>
+              </button>
+
+              <button id="btn-download" class="btn primary-btn">
+                <i data-lucide="download"></i>
+                <span>밈 다운로드</span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Footer -->
+  <footer class="studio-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 밈 생성기 CSS Studio. 입문자를 위한 포지셔닝 실습 프로젝트.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>

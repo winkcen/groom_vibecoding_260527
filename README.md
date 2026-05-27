@@ -1,48 +1,37 @@
-# 💡 생각의 기록 — 하루 한 줄 명언수첩 (Quote Notebook)
+# 💡 바이브 코딩 입문자용 MVP 프로젝트 허브 (Groom)
 
-> 바이브 코딩 입문자를 위해 구성된 세련되고 감각적인 MVP(Minimum Viable Product) 명언수첩 웹앱입니다.
-> 빌드 도구나 복잡한 프레임워크 없이, 브라우저에서 `index.html` 파일을 여는 것만으로도 완전한 프리미엄 UI/UX 환경을 체험할 수 있습니다.
-
----
-
-## 🎨 주요 특징 및 비주얼
-
-*   **글래스모피즘(Glassmorphic Card) & 입체적 하이라이트**: 
-    배경에 부드럽게 움직이는 두 개의 원형 그라데이션 조명(Ambient Glows)을 배치하여 깊이감을 높이고, 카드는 투명한 유리 질감을 주었습니다. 마우스의 실시간 좌표를 따라다니는 입체적인 카드 하이라이트 효과가 포함되어 있습니다.
-*   **중복 방지 무작위 재생**: 
-    '새로운 명언' 버튼을 클릭하면 내장된 20선 명언 데이터 중 하나를 무작위로 호출하며, 연속적인 감상 중 직전에 표시되었던 5개의 명언은 중복 노출되지 않도록 하는 안전 알고리즘이 내장되어 있습니다.
-*   **다국어 음성 낭독 (TTS - Web Speech API)**: 
-    한국어와 영어 명언을 감지하여 적절한 합성 목소리(`en-US` / `ko-KR`)로 자연스럽게 읽어줍니다. 재생 시에는 버튼의 텍스트가 '정지'로 바뀌며 재클릭 시 낭독이 정지되는 직관적인 오디오 라이프사이클을 제공합니다.
-*   **로컬 스토리지 기반 즐겨찾기 보관함**: 
-    하트 아이콘 클릭 시 바운스 애니메이션(Heart-pop)과 함께 해당 명언이 저장됩니다. 사용자의 브라우저 내 `LocalStorage`에 저장되므로, 새로고침이나 브라우저 재부팅 시에도 즐겨찾기 목록이 영구 보존됩니다.
-*   **전체 검색 모달 및 상세 조회**: 
-    내장된 전체 명언 리스트를 조회하고 실시간 필터 검색창을 통해 인물이나 텍스트를 즉각 검색하여 메인 화면으로 해당 명언을 로드할 수 있습니다.
+> 본 저장소는 코딩 입문자를 위해 구성된 직관적이고 시각적 완성도가 높은 미니 웹 토이프로젝트들의 모음집입니다.
+> 별도의 설치나 빌드 과정 없이 각 폴더 내의 `index.html` 파일을 더블클릭하여 바로 실행할 수 있습니다.
 
 ---
 
-## 🛠 기술 스택
+## 📂 프로젝트 목록
 
-*   **Core**: HTML5, Vanilla JavaScript (ES6+)
-*   **Styling**: Vanilla CSS3 (HSL Dynamic Variables, Flexbox, Keyframe Animations, Dialog API)
+### 1. 💡 하루 한 줄 명언수첩 (`quote-notebook/`)
+*   **소개**: 매번 다른 명언을 감상하고, 음성으로 듣고, 내 보관함에 영구 저장하는 웹수첩입니다.
+*   **주요 기술**: HTML5, Vanilla CSS3, JavaScript (SpeechSynthesis API, LocalStorage, Custom Dialog)
+*   **학습 테마**: 기초 DOM 제어, 로컬 브라우저 데이터 영구 관리, 테마 토글 및 오디오 인터렉션.
+*   **실행 파일**: [quote-notebook/index.html](./quote-notebook/index.html)
+
+### 2. ⚡ 즉석 밈 생성기 (`meme-generator/`)
+*   **소개**: 템플릿 이미지 위에 자유롭게 글자를 드래그 배치하고 조절하여 나만의 유쾌한 짤방(Meme)을 만들고 내려받는 도구입니다.
+*   **주요 기술**: HTML5, CSS3, JavaScript (Drag & Drop DOM API, html2canvas capture library)
+*   **학습 테마**: **CSS Position (`relative`와 `absolute`)의 관계 실습**, 마우스/터치 좌표 변환 계산, 라이브 CSS 코드 뷰어 연동.
+*   **실행 파일**: [meme-generator/index.html](./meme-generator/index.html)
+
+---
+
+## 🛠 공통 기술 스택
+
+*   **Markup & Logic**: HTML5, Vanilla JavaScript (ES6+)
+*   **Styling**: Pure CSS3 (HSL 컬러 토큰, 반응형 미디어 쿼리, Glassmorphism, Keyframe animations)
 *   **Icons**: [Lucide Icons](https://lucide.dev/) (CDN 라이브러리 연동)
 
 ---
 
-## 📂 파일 구조
+## 🚀 실행 및 테스트 방법
 
-```text
-groom/
-├── index.html     # 웹앱 구조 마크업 및 SEO 메타데이터 설정
-├── style.css      # HSL 테마 스위치, 글래스모피즘 및 반응형 미디어 쿼리
-├── app.js         # 명언 데이터베이스, 무작위 렌더링, TTS, 북마크 로직 제어
-├── quotes.md      # 원본 20선 명언 마크다운 백업본
-└── README.md      # 프로젝트 개요 및 실행 안내 문서
-```
-
----
-
-## 🚀 실행 방법
-
-1. 본 저장소를 클론하거나 코드를 다운로드합니다.
-2. 디렉토리 내의 **`index.html`** 파일을 더블클릭하여 사용하는 브라우저(Chrome, Edge, Safari 등)에서 즉시 실행합니다.
-3. 별도의 로컬 웹 서버(npm, python server 등)를 실행할 필요 없이 완전하게 오프라인에서도 작동합니다.
+1. 저장소를 클론 또는 다운로드합니다.
+2. 원하는 프로젝트 폴더(`quote-notebook` 또는 `meme-generator`)로 이동합니다.
+3. 해당 폴더의 **`index.html`** 파일을 웹 브라우저에서 직접 더블클릭하여 실행합니다.
+4. 모든 기능은 서버리스(Serverless) 클라이언트 단독 코드로 동작하므로 오프라인 환경에서도 안전하게 즐기실 수 있습니다.
