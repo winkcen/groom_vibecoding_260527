@@ -1,0 +1,851 @@
+/* ==========================================================================
+   1. Theme Variables & Reset
+   ========================================================================== */
+:root {
+  /* Common Y2K Design System */
+  --cyber-grid-color: rgba(180, 100, 240, 0.08);
+  --win98-bg: hsl(0, 0%, 76%);
+  --win98-blue: hsl(210, 100%, 25%);
+  --win98-blue-light: hsl(210, 100%, 40%);
+  --border-light: #ffffff;
+  --border-dark: #808080;
+  --border-shadow: #404040;
+  
+  /* Skin 1: Cyber Silver Default Tokens */
+  --device-bg: radial-gradient(circle at 30% 20%, #e0e0e0 0%, #a2a2a2 100%);
+  --device-border: outset 4px #eee;
+  --device-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  --lcd-bg: #1c2b1a;
+  --lcd-text: #39ff14; /* Neon green dot matrix */
+  --lcd-glow: 0 0 12px rgba(57, 255, 20, 0.65);
+  
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: hsl(260, 40%, 6%);
+  color: #000;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ==========================================================================
+   2. Y2K Aesthetic Backgrounds
+   ========================================================================== */
+/* Retro neon 3D cyber grid */
+.cyber-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(to right, var(--cyber-grid-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--cyber-grid-color) 1px, transparent 1px);
+  background-size: 40px 40px;
+  transform: perspective(500px) rotateX(60deg) translateY(-30%) scale(2);
+  transform-origin: top center;
+  z-index: -2;
+  opacity: 0.65;
+}
+
+.ambient-glow {
+  position: fixed;
+  width: 50vw;
+  height: 50vw;
+  border-radius: 50%;
+  filter: blur(140px);
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.glow-pink {
+  top: -10%;
+  right: -5%;
+  background-color: hsl(320, 90%, 50%);
+  animation: float-glow-1 25s ease-in-out infinite alternate;
+}
+
+.glow-teal {
+  bottom: -5%;
+  left: -5%;
+  background-color: hsl(175, 90%, 40%);
+  animation: float-glow-2 30s ease-in-out infinite alternate;
+}
+
+@keyframes float-glow-1 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-10%, 8%) scale(1.2); }
+}
+
+@keyframes float-glow-2 {
+  0% { transform: translate(0, 0) scale(1.1); }
+  100% { transform: translate(12%, -8%) scale(0.9); }
+}
+
+/* ==========================================================================
+   3. Windows 98 Titlebar Header
+   ========================================================================== */
+.win98-header {
+  background-color: var(--win98-bg);
+  border: outset 2px var(--border-light);
+  padding: 4px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title-bar {
+  background: linear-gradient(to right, var(--win98-blue), var(--win98-blue-light));
+  color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  border-radius: 2px;
+}
+
+.bar-icon {
+  width: 0.95rem;
+  height: 0.95rem;
+  stroke-width: 2.5;
+}
+
+.win98-actions {
+  display: flex;
+  gap: 3px;
+  padding-left: 8px;
+}
+
+.win98-actions button {
+  width: 18px;
+  height: 18px;
+  background-color: var(--win98-bg);
+  border: outset 1.5px var(--border-light);
+  position: relative;
+  outline: none;
+}
+
+.win98-actions button:active {
+  border-style: inset;
+}
+
+/* Win98 Window Controls Symbols */
+.win98-btn-min::after {
+  content: "";
+  position: absolute;
+  bottom: 3px;
+  left: 3px;
+  width: 8px;
+  height: 2px;
+  background-color: #000;
+}
+
+.win98-btn-max::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 8px;
+  height: 7px;
+  border-top: 2px solid #000;
+  border-left: 1px solid #000;
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+
+.win98-btn-close::after {
+  content: "×";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* ==========================================================================
+   4. Studio Workspace Layout
+   ========================================================================== */
+.workspace-main {
+  flex: 1;
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.studio-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+/* ==========================================================================
+   5. Skin Changer Deck
+   ========================================================================== */
+.skin-selector-deck {
+  background-color: var(--win98-bg);
+  border: outset 3px var(--border-light);
+  box-shadow: inset 1px 1px 0px #fff, 4px 4px 12px rgba(0, 0, 0, 0.4);
+  padding: 0.9rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.selector-label {
+  font-family: 'Silkscreen', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #000;
+}
+
+.skin-buttons {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.skin-btn {
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  border-radius: 3px;
+  border: outset 2.5px var(--border-light);
+  color: #000;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: transform 0.1s ease;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.skin-btn:active {
+  border-style: inset;
+  transform: translate(1px, 1px);
+}
+
+.skin-btn.active {
+  border-style: inset;
+  background-color: #d0d0d0;
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Skin color previews */
+.skin-btn::before {
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.3);
+}
+
+.skin-btn.silver::before { background-color: #c0c0c0; }
+.skin-btn.blue::before { background-color: #4a8df8; }
+.skin-btn.pink::before { background-color: #f7a3cc; }
+
+/* ==========================================================================
+   6. Y2K Aesthetic Focus Device (Skeuomorphic Board)
+   ========================================================================== */
+.playground-area {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+/* Main device wrapper */
+.y2k-device {
+  position: relative;          /* Target for dropping stickers absolute position */
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  border-radius: 80px 80px 100px 100px;
+  padding: 3rem 2.2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  user-select: none;
+  
+  /* Dynamic values derived by skin state toggles */
+  background: var(--device-bg);
+  border: var(--device-border);
+  box-shadow: var(--device-shadow);
+  
+  transition: background var(--transition-normal), border var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+/* Translucent Glossy Reflection on device face */
+.glass-glare {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 45%, rgba(0, 0, 0, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Brand badge */
+.brand-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Dosis', sans-serif;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 0.95rem;
+  letter-spacing: 0.15em;
+  text-shadow: 1px 1px 0px rgba(255,255,255,0.4);
+}
+
+.brand-badge .model-no {
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  margin-top: -2px;
+  opacity: 0.8;
+}
+
+/* LCD Bezel */
+.device-screen-bezel {
+  width: 100%;
+  background: #333333;
+  border: inset 3.5px var(--border-shadow);
+  padding: 12px;
+  border-radius: 20px;
+  box-shadow: inset 0 8px 16px rgba(0,0,0,0.8), 0 2px 2px rgba(255,255,255,0.1);
+}
+
+/* LCD Liquid Crystal Screen */
+.device-lcd {
+  position: relative;
+  background-color: var(--lcd-bg);
+  border-radius: 8px;
+  padding: 1rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  overflow: hidden;
+  box-shadow: inset 0 4px 8px rgba(0,0,0,0.9);
+  transition: background-color var(--transition-normal);
+}
+
+/* Retro Pixel Matrix Dot Mesh Grid Overlay */
+.lcd-dot-matrix {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.18) 1px, transparent 1px);
+  background-size: 3px 3px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* LCD Header Status indicators */
+.lcd-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.4rem;
+  z-index: 3;
+}
+
+.lcd-indicator {
+  font-family: 'Silkscreen', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.15); /* Off state */
+  letter-spacing: -0.01em;
+  transition: color var(--transition-normal), text-shadow var(--transition-normal);
+}
+
+.lcd-indicator.active {
+  color: var(--lcd-text);
+  text-shadow: var(--lcd-glow);
+}
+
+.bell-icon {
+  width: 0.9rem;
+  height: 0.9rem;
+  color: rgba(255, 255, 255, 0.1);
+  transition: color 0.2s ease;
+}
+
+.bell-icon.ringing {
+  color: var(--lcd-text);
+  animation: bell-swing 0.5s ease infinite alternate;
+}
+
+@keyframes bell-swing {
+  0% { transform: rotate(-15deg); }
+  100% { transform: rotate(15deg); }
+}
+
+/* LCD Clock digits */
+.lcd-clock {
+  font-family: 'Share Tech Mono', 'Courier New', monospace;
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--lcd-text);
+  text-shadow: var(--lcd-glow);
+  line-height: 1;
+  letter-spacing: 0.05em;
+  z-index: 3;
+  transition: color var(--transition-normal);
+}
+
+.colon-blink {
+  animation: blinker 1s steps(2, start) infinite;
+}
+
+@keyframes blinker {
+  to { visibility: hidden; }
+}
+
+/* LCD Scrolling Ticker message footer */
+.lcd-footer {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
+  padding: 4px;
+  overflow: hidden;
+  display: flex;
+  z-index: 3;
+}
+
+.ticker-text {
+  display: inline-block;
+  white-space: nowrap;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--lcd-text);
+  opacity: 0.85;
+  text-shadow: var(--lcd-glow);
+  animation: ticker 12s linear infinite;
+  padding-left: 100%; /* Start scrolling from right side */
+}
+
+@keyframes ticker {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-150%, 0, 0); }
+}
+
+/* Speaker Grill details */
+.speaker-grill {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  opacity: 0.35;
+}
+
+.speaker-grill span {
+  display: flex;
+  gap: 3px;
+}
+
+.speaker-grill span::before,
+.speaker-grill span::after {
+  content: "";
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #000;
+  box-shadow: inset 1px 1px 0px rgba(255,255,255,0.4);
+}
+
+/* 3D Skeuomorphic Buttons Grid Control panel */
+.device-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.1rem;
+  width: 100%;
+}
+
+.device-btn {
+  position: relative;
+  border-radius: 12px;
+  padding: 0;
+  outline: none;
+  background-color: #3e3e3e; /* Button base shadow depth */
+  border: 1px solid rgba(0,0,0,0.4);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.btn-top {
+  display: block;
+  padding: 0.75rem 0.5rem;
+  border-radius: 10px;
+  font-family: 'Silkscreen', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  border: outset 3px rgba(255,255,255,0.35);
+  transform: translateY(-4px); /* Up state height */
+  transition: transform 0.1s ease, filter 0.2s ease;
+}
+
+.start-key .btn-top { background: linear-gradient(135deg, #4ef072 0%, #1e9b3a 100%); }
+.stop-key .btn-top { background: linear-gradient(135deg, #ff4c4c 0%, #a81c1c 100%); }
+.reset-key .btn-top { background: linear-gradient(135deg, #f7ce46 0%, #b38b12 100%); }
+
+/* 3D button click animation */
+.device-btn:active .btn-top {
+  transform: translateY(0); /* push to base level */
+  border-style: inset;
+}
+
+/* Preset buttons deck */
+.device-modes {
+  display: flex;
+  gap: 1.25rem;
+  justify-content: center;
+  width: 100%;
+  border-top: 1px dashed rgba(0,0,0,0.15);
+  padding-top: 1rem;
+}
+
+.preset-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: 'Silkscreen', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: rgba(0,0,0,0.6);
+  text-shadow: 0.5px 0.5px 0px rgba(255,255,255,0.4);
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.preset-btn:hover {
+  color: #000;
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.preset-btn.active {
+  color: #000;
+  background-color: rgba(255, 255, 255, 0.4);
+  border: inset 1px rgba(0,0,0,0.25);
+}
+
+.preset-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #888;
+  border: 1px solid rgba(0,0,0,0.4);
+}
+
+.preset-btn.active .preset-dot {
+  background-color: #39ff14;
+  box-shadow: 0 0 6px #39ff14;
+}
+
+/* Device drop area empty instruction hint */
+.device-drop-hint {
+  font-family: 'Silkscreen', sans-serif;
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.25);
+  letter-spacing: 0.1em;
+  margin-top: -0.5rem;
+}
+
+/* ==========================================================================
+   7. Y2K Device Skins Variations
+   ========================================================================== */
+/* SKIN 2: Translucent Blue (90s iMac/Gameboy color scheme) */
+.y2k-device.skin-blue {
+  --device-bg: radial-gradient(circle at 30% 20%, hsla(210, 85%, 60%, 0.6) 0%, hsla(210, 95%, 42%, 0.55) 100%);
+  --device-border: outset 4.5px hsla(210, 85%, 75%, 0.65);
+  --device-shadow: 0 20px 40px rgba(0, 0, 0, 0.35), 0 0 25px hsla(210, 85%, 55%, 0.25);
+  --lcd-bg: #0d1e2e;
+  --lcd-text: #00f0ff; /* Neon Cyan */
+  --lcd-glow: 0 0 10px rgba(0, 240, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Translucent skin wire mesh details */
+.y2k-device.skin-blue::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1.5px, transparent 1.5px);
+  background-size: 16px 16px;
+  pointer-events: none;
+  z-index: 1;
+  border-radius: inherit;
+}
+
+.y2k-device.skin-blue .brand-badge,
+.y2k-device.skin-blue .device-modes .preset-btn {
+  color: #fff;
+  text-shadow: 1px 1px 0px rgba(0,0,0,0.3);
+}
+
+.y2k-device.skin-blue .device-drop-hint {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* SKIN 3: Retro Pink (Tamagotchi / Folder Phone) */
+.y2k-device.skin-pink {
+  --device-bg: radial-gradient(circle at 30% 20%, #ffbad2 0%, #e0608e 100%);
+  --device-border: outset 4px #ffcce0;
+  --device-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(224, 96, 142, 0.2);
+  --lcd-bg: #2d1822;
+  --lcd-text: #ff3377; /* Neon Hot Pink */
+  --lcd-glow: 0 0 10px rgba(255, 51, 119, 0.7);
+}
+
+.y2k-device.skin-pink .brand-badge,
+.y2k-device.skin-pink .device-modes .preset-btn {
+  color: #fff;
+  text-shadow: 1px 1px 0px rgba(0,0,0,0.25);
+}
+
+.y2k-device.skin-pink .device-drop-hint {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* ==========================================================================
+   8. Dakk-u Sticker Customizer Panel
+   ========================================================================== */
+.sticker-toolbox-card {
+  background-color: var(--win98-bg);
+  border: outset 3px var(--border-light);
+  box-shadow: inset 1px 1px 0px #fff, 4px 4px 15px rgba(0, 0, 0, 0.4);
+  padding: 1.5rem;
+  border-radius: 4px;
+}
+
+.toolbox-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Silkscreen', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 0.65rem;
+  border-bottom: 1.5px solid var(--border-dark);
+  padding-bottom: 0.45rem;
+}
+
+.toolbox-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  color: var(--win98-blue);
+  stroke-width: 2.2;
+}
+
+.toolbox-desc {
+  font-size: 0.8rem;
+  color: #404040;
+  margin-bottom: 1.25rem;
+  line-height: 1.4;
+}
+
+.stickers-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  background-color: #fff;
+  border: inset 2px var(--border-shadow);
+  padding: 1rem;
+  border-radius: 3px;
+  margin-bottom: 1.25rem;
+}
+
+/* Draggable Stickers Style */
+.y2k-sticker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.85rem;
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.15s ease;
+  filter: drop-shadow(1px 2px 2px rgba(0,0,0,0.2));
+}
+
+.y2k-sticker:hover {
+  transform: scale(1.2) rotate(5deg);
+}
+
+.y2k-sticker:active {
+  cursor: grabbing;
+}
+
+/* Placed Stickers on the device face */
+.dropped-sticker {
+  position: absolute;         /* Bound to the device body (relative) */
+  font-size: 1.85rem;
+  pointer-events: auto;
+  z-index: 10;
+  cursor: pointer;            /* Allows deleting on click */
+  filter: drop-shadow(2px 3px 3px rgba(0, 0, 0, 0.35));
+  animation: sticker-shake 0.3s var(--transition-bounce);
+}
+
+@keyframes sticker-shake {
+  0% { transform: scale(0) rotate(-20deg); }
+  100% { transform: scale(1) rotate(var(--rot, 0deg)); }
+}
+
+.clear-stickers-btn {
+  width: 100%;
+  padding: 0.65rem;
+  background-color: var(--win98-bg);
+  border: outset 2.5px var(--border-light);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #000;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.clear-stickers-btn:active {
+  border-style: inset;
+  transform: translate(1px, 1px);
+}
+
+.clear-stickers-btn i {
+  width: 0.95rem;
+  height: 0.95rem;
+  color: #000;
+}
+
+/* ==========================================================================
+   9. Toast & Responsive Setups
+   ========================================================================== */
+.toast-container {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  pointer-events: none;
+}
+
+.toast {
+  background-color: var(--win98-bg);
+  border: outset 2px var(--border-light);
+  color: #000;
+  padding: 0.7rem 1.1rem;
+  box-shadow: 4px 4px 12px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  font-family: 'Silkscreen', sans-serif;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s var(--transition-bounce);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast-icon {
+  width: 1rem;
+  height: 1rem;
+  color: var(--win98-blue);
+  stroke-width: 2.5;
+}
+
+.app-footer {
+  margin-top: auto;
+  border-top: outset 2px var(--border-light);
+  padding: 1.5rem;
+  background-color: var(--win98-bg);
+  text-align: center;
+}
+
+.app-footer p {
+  font-size: 0.75rem;
+  color: #505050;
+  font-weight: 600;
+}
+
+/* Responsive Setting */
+@media (max-width: 780px) {
+  .playground-area {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .sticker-toolbox-card {
+    max-width: 440px;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .workspace-main {
+    padding: 1.25rem 0.5rem 2.5rem;
+  }
+  
+  .y2k-device {
+    padding: 2.2rem 1.2rem 2rem;
+    border-radius: 40px 40px 60px 60px;
+  }
+  
+  .lcd-clock {
+    font-size: 3rem;
+  }
+}

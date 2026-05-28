@@ -19,12 +19,6 @@
 *   **학습 테마**: **CSS Position (`relative`와 `absolute`)의 관계 실습**, 마우스/터치 좌표 변환 계산, 라이브 CSS 코드 뷰어 연동.
 *   **실행 파일**: [meme-generator/index.html](./meme-generator/index.html)
 
-### 📟 3. Y2K 뽀모도로 타이머 (`y2k-pomodoro/`)
-*   **소개**: 90년대 말 게임보이나 폴더폰, PDA 기기를 다루듯 나만의 스티커로 꾸미고 즐기는 8비트 전자 사운드 연동 집중 타이머입니다.
-*   **주요 기술**: HTML5, CSS3, JavaScript (Web Audio API Synthesizer, Drag & Drop API, LocalStorage)
-*   **학습 테마**: **CSS 3D 아날로그 스키어모피즘(Skeuomorphism)** 디자인, 주파수 합성 전자음 재생, 상대적 좌표 변환 스티커 배치.
-*   **실행 파일**: [y2k-pomodoro/index.html](./y2k-pomodoro/index.html)
-
 ---
 
 ## 🛠 공통 기술 스택
@@ -38,6 +32,6 @@
 ## 🚀 실행 및 테스트 방법
 
 1. 저장소를 클론 또는 다운로드합니다.
-2. 원하는 프로젝트 폴더(`quote-notebook`, `meme-generator` 또는 `y2k-pomodoro`)로 이동합니다.
+2. 원하는 프로젝트 폴더(`quote-notebook` 또는 `meme-generator`)로 이동합니다.
 3. 해당 폴더의 **`index.html`** 파일을 웹 브라우저에서 직접 더블클릭하여 실행합니다.
 4. 모든 기능은 서버리스(Serverless) 클라이언트 단독 코드로 동작하므로 오프라인 환경에서도 안전하게 즐기실 수 있습니다.

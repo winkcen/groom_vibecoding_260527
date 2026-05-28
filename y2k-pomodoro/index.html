@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Y2K 감성의 뽀모도로 집중 타이머. 90년대 말 레트로 테크 기기 스킨과 비프음, 스티커 꾸미기 기능을 제공하는 나만의 뽀모도로 타이머입니다.">
+  <meta name="keywords" content="뽀모도로, 타이머, Y2K감성, 윈도우98, 레트로테크, 집중타이머, 웹디자인">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="📟 Y2K 뽀모도로 타이머 — 레트로 테크 포커스 디바이스">
+  <meta property="og:description" content="삐삑- 레트로 버튼음과 감각적인 투명 스킨으로 집중력을 극대화하세요. 스티커 다꾸 기능 포함!">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?q=80&w=1200">
+
+  <title>Y2K 뽀모도로 타이머 — Retro Focus Device</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Silkscreen (Y2K Pixel), Share Tech Mono (LCD Dot), Outfit (System UI) -->
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Silkscreen:wght@400;700&family=Outfit:wght@300;400;600;700&family=Dosis:wght@700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Retro Cyber Grid Background Backgrounds -->
+  <div class="cyber-grid" aria-hidden="true"></div>
+  <div class="ambient-glow glow-pink" aria-hidden="true"></div>
+  <div class="ambient-glow glow-teal" aria-hidden="true"></div>
+
+  <!-- App Header (Window 98 Style) -->
+  <header class="win98-header">
+    <div class="header-container">
+      <div class="title-bar">
+        <i data-lucide="timer" class="bar-icon"></i>
+        <span class="bar-title">Y2K_POMODORO.EXE</span>
+      </div>
+      <div class="win98-actions">
+        <button class="win98-btn-min" aria-label="최소화"></button>
+        <button class="win98-btn-max" aria-label="최대화"></button>
+        <button class="win98-btn-close" aria-label="닫기"></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <main class="workspace-main">
+    <div class="studio-layout">
+      
+      <!-- Top: Skin Changer Deck -->
+      <div class="skin-selector-deck">
+        <span class="selector-label">스킨 변경 (SKIN)</span>
+        <div class="skin-buttons">
+          <button id="skin-silver" class="skin-btn silver active" data-skin="silver" aria-label="메탈릭 실버 스킨">
+            <span class="btn-texture"></span>
+            <span>Cyber Silver</span>
+          </button>
+          <button id="skin-blue" class="skin-btn blue" data-skin="blue" aria-label="투명 가전 블루 스킨">
+            <span class="btn-texture"></span>
+            <span>Transparent Blue</span>
+          </button>
+          <button id="skin-pink" class="skin-btn pink" data-skin="pink" aria-label="체리 폴더폰 핑크 스킨">
+            <span class="btn-texture"></span>
+            <span>Retro Pink</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Center Layout: Device + Sticker Area -->
+      <div class="playground-area">
+        
+        <!-- Y2K Device Frame (Target for Stickers Drop) -->
+        <div id="y2k-device" class="y2k-device skin-silver">
+          <!-- Translucent glass reflex overlay -->
+          <div class="glass-glare" aria-hidden="true"></div>
+          
+          <!-- Brand Badge -->
+          <div class="brand-badge">
+            <span>NEO-TECH</span>
+            <span class="model-no">POMO-2000</span>
+          </div>
+
+          <!-- LCD Screen Panel -->
+          <div class="device-screen-bezel">
+            <div id="lcd-display" class="device-lcd state-focus">
+              <!-- LCD Grid Layer pattern overlay -->
+              <div class="lcd-dot-matrix" aria-hidden="true"></div>
+              
+              <!-- Top LCD Row: Status Indicator -->
+              <div class="lcd-header">
+                <span id="indicator-focus" class="lcd-indicator active">● FOCUS</span>
+                <span id="indicator-break" class="lcd-indicator">● BREAK</span>
+                <i data-lucide="bell-ring" id="alarm-bell" class="bell-icon"></i>
+              </div>
+
+              <!-- Main LCD Row: Digital Pixel Clock -->
+              <div class="lcd-clock">
+                <span id="minutes">25</span><span class="colon-blink">:</span><span id="seconds">00</span>
+              </div>
+
+              <!-- Bottom LCD Row: Scrolling Info Text -->
+              <div class="lcd-footer">
+                <span id="lcd-ticker" class="ticker-text">READY TO FOCUS — PRESS START KEY</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Speakers Dots Grill -->
+          <div class="speaker-grill" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+
+          <!-- Device Buttons Deck -->
+          <div class="device-controls">
+            <!-- 3D Bevel Control Keys -->
+            <button id="btn-start" class="device-btn start-key" aria-label="타이머 시작">
+              <span class="btn-top">START</span>
+            </button>
+            <button id="btn-stop" class="device-btn stop-key" aria-label="타이머 정지">
+              <span class="btn-top">STOP</span>
+            </button>
+            <button id="btn-reset" class="device-btn reset-key" aria-label="타이머 초기화">
+              <span class="btn-top">RESET</span>
+            </button>
+          </div>
+
+          <!-- Mode Preset Toggles -->
+          <div class="device-modes">
+            <button id="btn-mode-focus" class="preset-btn active" aria-label="집중 25분 세팅">
+              <span class="preset-dot"></span> FOCUS (25m)
+            </button>
+            <button id="btn-mode-break" class="preset-btn" aria-label="휴식 5분 세팅">
+              <span class="preset-dot"></span> BREAK (5m)
+            </button>
+          </div>
+          
+          <!-- Drop area text instruction when empty -->
+          <div class="device-drop-hint" aria-hidden="true">STICKERS WELCOME</div>
+        </div>
+
+        <!-- Right Side: Sticker Toolbox for "Dakk-u" customization -->
+        <div class="sticker-toolbox-card">
+          <div class="toolbox-header">
+            <i data-lucide="sparkles" class="toolbox-icon"></i>
+            <span>스티커 보관함 (다꾸)</span>
+          </div>
+          <p class="toolbox-desc">스티커를 기기 바디 위로 드래그해서 예쁘게 커스텀 해보세요!</p>
+          
+          <div id="stickers-container" class="stickers-grid">
+            <!-- Retro Pixel Icons/Emojis as stickers -->
+            <div class="y2k-sticker" draggable="true" data-type="heart" title="하트 스티커">💖</div>
+            <div class="y2k-sticker" draggable="true" data-type="star" title="별 스티커">🌟</div>
+            <div class="y2k-sticker" draggable="true" data-type="fire" title="파이어 스티커">🔥</div>
+            <div class="y2k-sticker" draggable="true" data-type="cherry" title="체리 스티커">🍒</div>
+            <div class="y2k-sticker" draggable="true" data-type="smile" title="스마일 스티커">☺</div>
+            <div class="y2k-sticker" draggable="true" data-type="alien" title="외계인 스티커">👾</div>
+            <div class="y2k-sticker" draggable="true" data-type="clover" title="클로버 스티커">🍀</div>
+            <div class="y2k-sticker" draggable="true" data-type="ribbon" title="리본 스티커">🎀</div>
+          </div>
+          
+          <button id="btn-clear-stickers" class="clear-stickers-btn">
+            <i data-lucide="trash-2"></i> 스티커 전체 삭제
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 NEO-TECH POMO-2000. Y2K Aesthetic Focus Station.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>
