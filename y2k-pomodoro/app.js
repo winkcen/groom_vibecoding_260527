@@ -1,7 +1,7 @@
 // ==========================================================================
 // 1. Timer State & Configuration
 // ==========================================================================
-let focusTime = 25 * 60; // 25 minutes
+let focusTime = 20 * 60; // 20 minutes default
 let breakTime = 5 * 60;  // 5 minutes
 
 let timerId = null;
@@ -28,7 +28,9 @@ const btnStart = document.getElementById('btn-start');
 const btnStop = document.getElementById('btn-stop');
 const btnReset = document.getElementById('btn-reset');
 
-const btnModeFocus = document.getElementById('btn-mode-focus');
+const btnModeFocus20 = document.getElementById('btn-mode-focus-20');
+const btnModeFocus40 = document.getElementById('btn-mode-focus-40');
+const btnModeFocus60 = document.getElementById('btn-mode-focus-60');
 const btnModeBreak = document.getElementById('btn-mode-break');
 
 const y2kDevice = document.getElementById('y2k-device');
@@ -123,24 +125,40 @@ function setTickerText(message) {
   tickerEl.style.animation = 'ticker 12s linear infinite';
 }
 
-function switchMode(mode) {
+function switchMode(mode, customTime = null) {
   currentMode = mode;
   
   // Update presets buttons visuals
   if (currentMode === 'focus') {
+    if (customTime) {
+      focusTime = customTime;
+    }
     timeLeft = focusTime;
-    btnModeFocus.classList.add('active');
+    
+    // Remove active state from all preset buttons
+    btnModeFocus20.classList.remove('active');
+    btnModeFocus40.classList.remove('active');
+    btnModeFocus60.classList.remove('active');
     btnModeBreak.classList.remove('active');
+    
+    // Set active depending on current focusTime
+    if (focusTime === 20 * 60) btnModeFocus20.classList.add('active');
+    else if (focusTime === 40 * 60) btnModeFocus40.classList.add('active');
+    else if (focusTime === 60 * 60) btnModeFocus60.classList.add('active');
+    
     indicatorFocus.classList.add('active');
     indicatorBreak.classList.remove('active');
     
     // LCD skin class for focus
     document.getElementById('lcd-display').className = "device-lcd state-focus";
-    setTickerText("FOCUS MODE ACTIVE — ACCELERATING CREATIVE ENERGY");
+    setTickerText(`FOCUS MODE ACTIVE (${focusTime / 60}m) — ACCELERATING CREATIVE ENERGY`);
   } else {
     timeLeft = breakTime;
-    btnModeFocus.classList.remove('active');
+    btnModeFocus20.classList.remove('active');
+    btnModeFocus40.classList.remove('active');
+    btnModeFocus60.classList.remove('active');
     btnModeBreak.classList.add('active');
+    
     indicatorFocus.classList.remove('active');
     indicatorBreak.classList.add('active');
     
@@ -423,9 +441,17 @@ function initApp() {
   btnReset.addEventListener('click', resetTimer);
 
   // Mode selectors
-  btnModeFocus.addEventListener('click', () => {
+  btnModeFocus20.addEventListener('click', () => {
     playBeep(1000, 0.06);
-    switchMode('focus');
+    switchMode('focus', 20 * 60);
+  });
+  btnModeFocus40.addEventListener('click', () => {
+    playBeep(1000, 0.06);
+    switchMode('focus', 40 * 60);
+  });
+  btnModeFocus60.addEventListener('click', () => {
+    playBeep(1000, 0.06);
+    switchMode('focus', 60 * 60);
   });
   btnModeBreak.addEventListener('click', () => {
     playBeep(1000, 0.06);

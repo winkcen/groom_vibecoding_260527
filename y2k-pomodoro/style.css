@@ -542,7 +542,8 @@ body {
 /* Preset buttons deck */
 .device-modes {
   display: flex;
-  gap: 1.25rem;
+  flex-wrap: wrap;
+  gap: 0.6rem;
   justify-content: center;
   width: 100%;
   border-top: 1px dashed rgba(0,0,0,0.15);
